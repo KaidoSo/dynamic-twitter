@@ -71,7 +71,7 @@ function userElon() {
 function userBill() {
     var urlParams = new URLSearchParams();
     urlParams.set("user", "user2");
-    window.location.href = "https://kaidoso.github.io/dynamic-twitter/" + urlParams.toString();
+    window.location.href = "https://kaidoso.github.io/dynamic-twitter/?" + urlParams.toString();
 };
 
 // display Bill by default, Elon if user=user1
