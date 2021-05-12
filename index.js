@@ -1,6 +1,9 @@
 var user1 = {
     userName: '@elonmusk',
     displayName: 'Elon Musk',
+    description: 'Technoking of Tesla, Imperator of Mars.',
+    location: 'Mars',
+    urlLink: 'tesla.com',
     joinedDate: 'June 2009',
     followingCount: 103,
     followerCount: 47900000,
@@ -25,6 +28,9 @@ var user1 = {
 var user2 = {
     userName: '@BillGates',
     displayName: 'Bill Gates',
+    description: 'Sharing things I\'m learning through my foundation work and other interests.',
+    location: 'Seattle, WA',
+    urlLink: 'gatesnot.es/HowToAvoidCli...',
     joinedDate: 'June 2009',
     followingCount: 274,
     followerCount: 53800000,
@@ -50,8 +56,33 @@ var user2 = {
     ]
 };
 
+// function to get URL variables
+var urlParams = new URLSearchParams(window.location.search);
+var userInt = 0;
+
+// function to change URL to user 1
+function userElon() {
+    var urlParams = new URLSearchParams();
+    urlParams.set("user", "user1");
+    window.location.href = "https://kaidoso.github.io/dynamic-twitter/?" + urlParams.toString();
+};
+
+// function to change URL to user 1
+function userBill() {
+    var urlParams = new URLSearchParams();
+    urlParams.set("user", "user2");
+    window.location.href = "https://kaidoso.github.io/dynamic-twitter/" + urlParams.toString();
+};
+
+// display Bill by default, Elon if user=user1
+if(urlParams.toLocaleString() == "user=user1"){
+    userInt = 0;
+} else { //urlParams = "user=user2"
+    userInt = 1;
+};
+
 // declare variables
-var user = user2;
+var users = [user1, user2];
 var sideCointainer = document.getElementById('container-side-menu');
 var mainContainer = document.getElementById('container-main');
 var headerContainer = document.getElementById('container-header');
@@ -97,13 +128,13 @@ headerContainer.innerHTML = `
         <a href="#"><img src="assets/arrow-left.png"/></a>
     </div>
     <div class="top-user">
-        <p class="display-name">${user.displayName}
+        <p class="display-name">${users[userInt].displayName}
             <span class="fa-stack">
                 <i class="fa fa-circle-thin fa-stack-2x"></i>
                 <i class="fa fa-check-circle fa-stack-2x"></i>
             </span> 
         </p>
-        <p id="no-of-tweets">${user.tweets.length} Tweets</p>
+        <p id="no-of-tweets">${users[userInt].tweets.length} Tweets</p>
     </div>
 `;
 
@@ -111,7 +142,7 @@ headerContainer.innerHTML = `
 // cover photo
 photoContainer.innerHTML = `
     <div class="cover-img">
-        <img src="${user.coverPhotoURL}"/>
+        <img src="${users[userInt].coverPhotoURL}"/>
     </div>
 `;
 
@@ -119,19 +150,19 @@ photoContainer.innerHTML = `
 profileContainer.innerHTML = `
     <div class="profile-wrapper">
         <div class="avatar-img">
-            <img src="${user.avatarURL}"/>
+            <img src="${users[userInt].avatarURL}"/>
         </div>
         <div class="profile-buttons">
-            <div class="options">
-                <p>...</p>
+            <div class="switch">
+                <button id="elon-button">Elon</button>
             </div>
-            <div class="follow">
-                <button class="follow-button">Follow</button>
+            <div class="switch">
+                <button id="bill-button">Bill</button>
             </div>
         </div>
     </div>
     <div class="profile-info">
-        <p class="display-name">${user.displayName}
+        <p class="display-name">${users[userInt].displayName}
             <span class="fa-stack">
                 <i class="fa fa-circle-thin fa-stack-2x"></i>
                 <i class="fa fa-check-circle fa-stack-2x"></i>
@@ -139,22 +170,22 @@ profileContainer.innerHTML = `
         </p>
     </div>
     <div class="user-name">
-        <p>${user.userName}</p>
+        <p>${users[userInt].userName}</p>
     </div>
     <div class="about">
-        <p>Sharing things I'm learning through my foundation work and other interests.</p>
+        <p>${users[userInt].description}</p>
     </div>
     <div class="additional-info">
-        <p><i class="fa fa-map-marker" aria-hidden="true"></i> Seattle, WA</p>
-        <a href="#"> <i class="fa fa-link"></i> gatesnot.es/HowToAvoidCli...</a>
-        <p><i class="fa fa-calendar" aria-hidden="true"></i>Joined ${user.joinedDate}</p>
+        <p><i class="fa fa-map-marker" aria-hidden="true"></i> ${users[userInt].location}</p>
+        <a href="#"> <i class="fa fa-link"></i> ${users[userInt].urlLink}</a>
+        <p><i class="fa fa-calendar" aria-hidden="true"></i>Joined ${users[userInt].joinedDate}</p>
     </div>
     <div class="following-followers">
         <div class="following">
-            <p class="following-p"><a href="#">${user.followingCount}</a> Following<p>
+            <p class="following-p"><a href="#">${users[userInt].followingCount}</a> Following<p>
         </div>
         <div class="followers">
-            <p class="followers-p"><a href="#">${roundedString(user.followerCount)}</a> Followers<p>
+            <p class="followers-p"><a href="#">${roundedString(users[userInt].followerCount)}</a> Followers<p>
         </div>
     </div>
     <div id="container-tabs">
@@ -164,6 +195,14 @@ profileContainer.innerHTML = `
         <div class="tab"><p>Likes</p></div>
     </div>
 `;
+
+// event listener to switch users
+var switchElon = document.getElementById('elon-button');
+switchElon.addEventListener('click', userElon);
+
+var switchBill = document.getElementById('bill-button');
+switchBill.addEventListener('click', userBill);
+
 // function to select between tabs
 var tabContainer = document.getElementById("container-tabs");
 var tabs = tabContainer.getElementsByClassName("tab");
@@ -177,8 +216,8 @@ for (var i = 0; i < tabs.length; i++) {
 };
 
 // function to display tweets
-for (var i = 0; i < user.tweets.length; i++) {
-    var tweet = user.tweets[i];
+for (var i = 0; i < users[userInt].tweets.length; i++) {
+    var tweet = users[userInt].tweets[i];
     var tweetValues = Object.values(tweet);
     var tweetCreated = tweetValues[1];
 
@@ -191,18 +230,18 @@ for (var i = 0; i < user.tweets.length; i++) {
     var tweetDiv = document.createElement("div");
     tweetDiv.classList.add("tweet-div")
     tweetDiv.innerHTML = `
-        <div class="tweet-avatar"><img src="${user.avatarURL}"/></div>
+        <div class="tweet-avatar"><img src="${users[userInt].avatarURL}"/></div>
         <div class="tweet-inner-container">
             <div class="tweet-details">
                 <div class="tweet-display-name">
-                    <p>${user.displayName}
+                    <p>${users[userInt].displayName}
                         <span class="fa-stack">
                             <i class="fa fa-circle-thin fa-stack-1x"></i>
                             <i class="fa fa-check-circle fa-stack-1x"></i>
                         </span> 
                     </p>
                 </div>
-                <div class="user-name">${user.userName}</div>
+                <div class="user-name">${users[userInt].userName}</div>
                 <div class="tweet-created">${months[displayMonth] +" "+ arr[0]}</div>
             </div>
             <div class="tweet-body">

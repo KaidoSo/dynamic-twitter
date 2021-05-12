@@ -115,44 +115,25 @@ p {
     align-items: flex-start;
 }
 
-.options, .follow {
-    color: var(--lightBlue);
-    padding: 5px 0px;
+.switch {
+    padding: 5px 5px;
 }
 
-.options:hover {
-    cursor: pointer;
-}
-
-.options p {
-    font-size: 1.3rem;
-    font-weight: 800;
-    text-align: center;
-    height: 37px;
-    width: 37px;
-    border: 1px solid var(--lightBlue);
-    border-radius: 50%;
-}
-
-.follow {
-    padding-right: 5px;
-    padding-left: 5px;
-}
-
-.follow-button {
+#bill-button, #elon-button {
     height: 37px;
     width: 77px;
     border-radius: 20px;
-    color: var(--lightBlue);
+    color: var(--grey);
     background-color: var(--black);
-    border: 1px solid var(--lightBlue);
+    border: 1px solid var(--grey);
     font-weight: 700;
     letter-spacing: 1px;
 }
 
-button:hover {
+#bill-button:hover, #elon-button:hover {
     cursor: pointer;
-    background-color: rgba(29, 161, 242, 0.1);
+    color: var(--lightBlue);
+    border: 1px solid var(--lightBlue);
     transition: ease-in .3s;
 }
 
