@@ -56,7 +56,7 @@ var user2 = {
     ]
 };
 
-// function to get URL variables
+
 var urlParams = new URLSearchParams(window.location.search);
 var userInt = 0;
 
@@ -67,7 +67,7 @@ function userElon() {
     window.location.href = "https://kaidoso.github.io/dynamic-twitter/?" + urlParams.toString();
 };
 
-// function to change URL to user 1
+// function to change URL to user 2
 function userBill() {
     var urlParams = new URLSearchParams();
     urlParams.set("user", "user2");
@@ -77,7 +77,7 @@ function userBill() {
 // display Bill by default, Elon if user=user1
 if(urlParams.toLocaleString() == "user=user1"){
     userInt = 0;
-} else { //urlParams = "user=user2"
+} else {
     userInt = 1;
 };
 
